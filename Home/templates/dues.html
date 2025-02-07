@@ -1,0 +1,52 @@
+{% if request.user.designation == "Student" %}
+{% include "student_base.html" %}
+{% else %}
+{% include "admin_base.html" %}
+{% endif %}
+{%load static%}
+<html lang="en">
+
+<head>
+
+  <title>Dues</title>
+
+  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    body {
+      background: #E5E5E5;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="main_div" style="height:90%;">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="{{message.tags}}">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if request.user.designation == "Student" %}
+      <div class="dues_info">
+        {% if dues %}
+        <p style="color:white">You have pending dues of Rs. {{ dues }}</p>
+        {% else %}
+        <p style="color:white">You have no pending dues.</p>
+        {% endif %}
+      </div>
+      <a href="../../payments/adhoc"><button class="btn btn-success">Pay Your Dues</button></a>
+    {% else %}
+    <div class="admin_controls">
+      <a href="viewDues"><button class="btn btn-primary">View Dues</button></a>
+      <a href="addDues"><button class="btn btn-warning">Update Dues</button></a>
+    </div>
+    {% endif %}
+  </body>
+</div>
+</body>
+
+</html>

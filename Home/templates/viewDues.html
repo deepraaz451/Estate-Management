@@ -1,0 +1,56 @@
+{% if request.user.designation == "Student" %}
+{% include "student_base.html" %}
+{% else %}
+{% include "admin_base.html" %}
+{% endif %}
+{%load static%}
+<html lang="en">
+
+<head>
+
+  <title>Dues</title>
+
+  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    body {
+      background: #E5E5E5;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="main_div" style="height:90%;">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="{{message.tags}}">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if user_name %}
+    <div class="dues_info">
+        {% if dues %}
+        <p style="color:white"> {{user_name}} have pending dues of Rs. {{ dues }}</p>
+        {% else %}
+        <p style="color:white">{{user_name}} have no pending dues.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="viewDues">
+        {% csrf_token %}
+        <div class="form_ar">
+        <label for="username" style="color:white">Username</label>
+        <input type="text" name="username" id="username" required>
+        <button type="submit " value="View Dues" class="btn btn-primary"> View Dues</button>
+        </div>
+    </form>
+
+  </body>
+</div>
+</body>
+
+</html>
